@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-black flex justify-center items-center min-h-screen">
+  <div class="bg-gray-800 text-white rounded-lg p-8 w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center mb-8">Log In</h1>
+    <div class="mb-6 relative">
+      <input type="email" name="Email" placeholder="Email" spellcheck="false" required class="w-full bg-black border-b-2 border-blue-500 text-blue-500 py-2 px-4 focus:outline-none">
+      <i class="fa-solid fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500"></i>
+    </div>
+    <div class="mb-6 relative">
+      <input id="pas" onchange="pass()" type="password" placeholder="Password" spellcheck="false" required class="w-full bg-black border-b-2 border-blue-500 text-blue-500 py-2 px-4 focus:outline-none">
+      <i onclick="unlocker()" id="lock" class="fa-solid fa-lock absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500 cursor-pointer"></i>
+      <i onclick="locker()" id="unlock" class="fa-solid fa-lock-open absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500 cursor-pointer hidden"></i>
+    </div>
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center">
+        <button onclick="clicker()" class="w-4 h-4 border border-gray-400 rounded mr-2 flex items-center justify-center">
+          <h3 id="xbutt" class="xxbutt hidden text-black text-xs">x</h3>
+        </button>
+        <h5 class="text-sm">Remember me</h5>
+      </div>
+      <h5 class="text-sm"><a href="#" class="text-blue-500">Forget password?</a></h5>
+    </div>
+    <div class="text-center mb-4">
+        <a href="loading.html">
+          <button class="w-full bg-blue-500 text-white py-2 rounded-lg mb-4">Log In</button>
+        </a>
+
+      <h5 class="text-sm">Don't have an account? <span class="text-blue-500 cursor-pointer">Register here</span></h5>
+    </div>
+    <div class="text-center">
+      <button class="w-full bg-white text-black py-2 rounded-lg flex items-center justify-center">
+        <i class="fab fa-google text-red-500 mr-2"></i> Continue with Google
+      </button>
+    </div>
+  </div>
+  <script>
+    let xbut = document.getElementById('xbutt');
+    let pass = document.getElementById('pas');
+    let unlockButt = document.getElementById('lock');
+    let lockButt = document.getElementById('unlock');
+
+    function clicker() {
+      xbut.classList.toggle('hidden');
+    }
+
+    function unlocker() {
+      unlockButt.style.display = "none";
+      lockButt.style.display = "flex";
+      pass.type = "text";
+    }
+
+    function locker() {
+      unlockButt.style.display = "flex";
+      lockButt.style.display = "none";
+      pass.type = "password";
+    }
+  </script>
+</body>
+</html>

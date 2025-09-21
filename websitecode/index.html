@@ -1,0 +1,304 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotrez DDoS Protection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        .hidden { display: none; }
+        .transition-colors { transition: background-color 0.3s, color 0.3s; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hover\:bg-blue-600:hover { background-color: #2563eb; }
+        .hover\:bg-gray-200:hover { background-color: #e5e7eb; }
+        .hover\:text-blue-500:hover { color: #3b82f6; }
+        .hover\:text-gray-600:hover { color: #4b5563; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans transition-colors duration-300">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-100 p-4">
+            <div class="text-lg font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 text-transparent bg-clip-text">
+                Fotrez DDoS Protection
+            </div>
+            <nav>
+                <ul>
+                    <li class="mb-4">
+                        <a id="nav-home" class="flex items-center text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded transition-colors duration-300 hover:text-blue-500" onclick="showPage('home')">
+                            <i class="fas fa-home mr-2"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a id="nav-security" class="flex items-center text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded transition-colors duration-300 hover:text-blue-500" onclick="showPage('security')">
+                            <i class="fas fa-shield-alt mr-2"></i>
+                            Protection
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a id="nav-performance" class="flex items-center text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded transition-colors duration-300 hover:text-blue-500" onclick="showPage('performance')">
+                            <i class="fas fa-tachometer-alt mr-2"></i>
+                            Performance
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a id="nav-network" class="flex items-center text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded transition-colors duration-300 hover:text-blue-500" onclick="showPage('network')">
+                            <i class="fas fa-network-wired mr-2"></i>
+                            Network
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a id="nav-data-protection" class="flex items-center text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded transition-colors duration-300 hover:text-blue-500" onclick="showPage('data-protection')">
+                            <i class="fas fa-database mr-2"></i>
+                            Data Protection
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="mt-auto">
+                <a id="nav-settings" class="flex items-center text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded transition-colors duration-300 hover:text-blue-500" onclick="showPage('settings')">
+                    <i class="fas fa-cog mr-2"></i>
+                    Settings
+                </a>
+            </div>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-1 p-6 transition-colors duration-300">
+            <!-- Home Page -->
+            <div id="home" class="page">
+                <div class="flex justify-between items-center mb-6">
+                    <input class="bg-gray-200 text-gray-900 p-2 rounded w-1/3" placeholder="Search" type="text"/>
+                    <div class="flex items-center space-x-4">
+                        <i class="fas fa-bell text-gray-600"></i>
+                        <i class="fas fa-user-circle text-gray-600"></i>
+                    </div>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <div class="flex items-center mb-4">
+                        <img alt="Shield icon with a check mark" class="mr-4" height="50" src="https://storage.googleapis.com/a1aa/image/aEa6gJArZT7zn8fpeVNQe2Mc80k1BKb7ghenJZEHHLM.jpg" width="50"/>
+                        <div>
+                            <h2 class="text-xl font-bold">We've got you covered</h2>
+                            <p class="text-gray-600">Your DDoS protection is active</p>
+                            <p class="text-gray-600">Up to date protection</p>
+                        </div>
+                    </div>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Details</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <button class="bg-gray-100 p-6 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-200" onclick="showPage('start-protection')">
+                        <i class="fas fa-play-circle text-2xl mr-2"></i>
+                        Start Protection
+                    </button>
+                    <button class="bg-gray-100 p-6 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-200" onclick="showPage('monitor-performance')">
+                        <i class="fas fa-tachometer-alt text-2xl mr-2"></i>
+                        Monitor Performance
+                    </button>
+                    <button class="bg-gray-100 p-6 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-200" onclick="showPage('network-security')">
+                        <i class="fas fa-network-wired text-2xl mr-2"></i>
+                        Network Security
+                    </button>
+                    <button class="bg-gray-100 p-6 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-200" onclick="showPage('data-backup')">
+                        <i class="fas fa-database text-2xl mr-2"></i>
+                        Data Backup
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <p>Protect all your office devices with our subscription</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4">Timeline</h3>
+                    <div class="flex justify-between items-center mb-2">
+                        <p class="text-gray-600">DDoS attack mitigated successfully</p>
+                        <button class="text-blue-500 hover:underline">Learn more</button>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <p class="text-gray-600">New security updates applied</p>
+                        <button class="text-blue-500 hover:underline">Learn more</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Start Protection Page -->
+            <div id="start-protection" class="page hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Start Protection</h2>
+                    <button class="text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6 animate-fade-in">
+                    <h3 class="text-lg font-bold mb-4">Protection Status</h3>
+                    <p id="protection-status" class="text-gray-600">Protection is currently active.</p>
+                </div>
+            </div>
+            <!-- Monitor Performance Page -->
+            <div id="monitor-performance" class="page hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Monitor Performance</h2>
+                    <button class="text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6 animate-fade-in">
+                    <h3 class="text-lg font-bold mb-4">System Performance</h3>
+                    <p class="text-gray-600">Your system is running at optimal performance.</p>
+                </div>
+            </div>
+            <!-- Network Security Page -->
+            <div id="network-security" class="page hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Network Security</h2>
+                    <button class="text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6 animate-fade-in">
+                    <h3 class="text-lg font-bold mb-4">Network Status</h3>
+                    <p class="text-gray-600">Your network is secure and protected from DDoS attacks.</p>
+                </div>
+            </div>
+            <!-- Data Backup Page -->
+            <div id="data-backup" class="page hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Data Backup</h2>
+                    <button class="text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6 animate-fade-in">
+                    <h3 class="text-lg font-bold mb-4">Backup Status</h3>
+                    <p class="text-gray-600">All data is backed up and secure.</p>
+                </div>
+            </div>
+            <!-- Security Page -->
+            <div id="security" class="page hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Protection</h2>
+                    <button class="text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">Current Protection Status</h3>
+                    <p class="text-gray-600">Your DDoS protection is active and running smoothly.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">Recent Threats</h3>
+                    <p class="text-gray-600">No recent threats detected.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4">Protection Settings</h3>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Configure</button>
+                </div>
+            </div>
+            <!-- Performance Page -->
+            <div id="performance" class="page hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Performance</h2>
+                    <button class="text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">System Performance</h3>
+                    <p class="text-gray-600">Your system is running at optimal performance.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">Resource Usage</h3>
+                    <p class="text-gray-600">CPU Usage: 15%</p>
+                    <p class="text-gray-600">Memory Usage: 45%</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4">Performance Settings</h3>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Optimize</button>
+                </div>
+            </div>
+            <!-- Network Page -->
+            <div id="network" class="page hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Network</h2>
+                    <button class="text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">Network Security</h3>
+                    <p class="text-gray-600">Your network is secure and protected from DDoS attacks.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">Network Traffic</h3>
+                    <p class="text-gray-600">No unusual traffic detected.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4">Network Settings</h3>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Configure</button>
+                </div>
+            </div>
+            <!-- Data Protection Page -->
+            <div id="data-protection" class="page hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Data Protection</h2>
+                    <button class="text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">Backup Status</h3>
+                    <p class="text-gray-600">All data is backed up and secure.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">Recent Backups</h3>
+                    <p class="text-gray-600">Last backup: 2 hours ago</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4">Backup Settings</h3>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Configure</button>
+                </div>
+            </div>
+            <!-- Settings Page -->
+            <div id="settings" class="page hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Settings</h2>
+                    <button class="text-gray-600 cursor-pointer hover:bg-gray-200 p-2 rounded" onclick="showPage('home')">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">Account Settings</h3>
+                    <p class="text-gray-600">Manage your account settings and preferences.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4">Security Settings</h3>
+                    <p class="text-gray-600">Configure your security settings.</p>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold mb-4">Subscription</h3>
+                    <p class="text-gray-600">Manage your subscription and billing information.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('nav ul li a');
+            pages.forEach(page => {
+                page.classList.add('hidden');
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-500');
+                link.classList.add('text-gray-600');
+            });
+            document.getElementById(pageId).classList.remove('hidden');
+            document.getElementById(pageId).classList.add('animate-fade-in');
+            document.getElementById('nav-' + pageId).classList.remove('text-gray-600');
+            document.getElementById('nav-' + pageId).classList.add('text-blue-500');
+        }
+    </script>
+</body>
+</html>
