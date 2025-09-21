@@ -1,0 +1,137 @@
+ANYA  FOR AYMAN 
+
+Steps:
+Install Required Libraries
+Set Up Database
+Create the Flask App
+Create Basic NLP Processing
+Store User History and Learn from Interaction
+
+Install Required Libraries
+First, you’ll need to install some dependencies. Run this in your terminal:
+
+bash
+Copy code
+pip install Flask nltk sqlite3
+
+
+Set Up the Database
+We’ll use SQLite to store the user's history (symptoms and previous interactions). Create a file called db.py to initialize the database.
+
+python
+Copy code
+import sqlite3
+
+def init_db():
+    conn = sqlite3.connect('user_data.db')
+    c = conn.cursor()
+    # Create user history table if it doesn't exist
+    c.execute('''CREATE TABLE IF NOT EXISTS user_history
+                 (id INTEGER PRIMARY KEY, 
+                  user_id TEXT, 
+                  symptoms TEXT, 
+                  date TEXT)''')
+    conn.commit()
+    conn.close()
+
+def add_user_history(user_id, symptoms, date):
+    conn = sqlite3.connect('user_data.db')
+    c = conn.cursor()
+    c.execute("INSERT INTO user_history (user_id, symptoms, date) VALUES (?, ?, ?)", (user_id, symptoms, date))
+    conn.commit()
+    conn.close()
+
+def get_user_history(user_id):
+    conn = sqlite3.connect('user_data.db')
+    c = conn.cursor()
+    c.execute("SELECT symptoms, date FROM user_history WHERE user_id = ?", (user_id,))
+    history = c.fetchall()
+    conn.close()
+    return history
+
+
+
+ Create the Flask App
+Now, create a basic Flask app to handle the chatbot interaction. Create a file called app.py.
+
+python
+Copy code
+from flask import Flask, request, jsonify
+from datetime import datetime
+import nltk
+from nltk.chat.util import Chat, reflections
+import db
+
+# Initialize database
+db.init_db()
+
+app = Flask(__name__)
+
+# Simple pattern-response pairs for the chatbot
+pairs = [
+    (r"hi|hello|hey", ["Hello, how can I assist you today?"]),
+    (r"(.*) dry skin(.*)", ["Dry skin can be caused by many conditions like eczema, dehydration, or psoriasis. Can you provide more details about your symptoms?"]),
+    (r"(.*) rash(.*)", ["A rash can be due to allergies, skin infections, or eczema. Can you describe the rash in more detail?"]),
+    (r"(.*) tired(.*)", ["Feeling tired can be caused by stress, poor sleep, or even anemia. How long have you been feeling this way?"]),
+    (r"(.*)", ["I'm sorry, I didn't understand that. Could you tell me more about your symptoms?"])
+]
+
+# Initialize chatbot
+chatbot = Chat(pairs, reflections)
+
+# Route for the chatbot
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_input = request.json['message']
+    user_id = request.json['user_id']
+    
+    # Get response from the chatbot
+    response = chatbot.respond(user_input)
+    
+    # Log user input and response into the database
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    db.add_user_history(user_id, user_input, current_time)
+    
+    return jsonify({'response': response})
+
+# Route for retrieving user history
+@app.route('/history', methods=['GET'])
+def get_history():
+    user_id = request.args.get('user_id')
+    
+    history = db.get_user_history(user_id)
+    return jsonify({'history': history})
+
+# Run the app
+if __name__ == '__main__':
+    app.run(debug=True)
+
+ Testing the Chatbot
+To test the chatbot:
+
+Run the app:
+
+bash
+Copy code
+python app.py
+Open a new terminal or use an API client like Postman to send a POST request to your /chat endpoint with the following JSON body:
+
+json
+Copy code
+{
+    "message": "I have dry skin.",
+    "user_id": "user123"
+}
+You should get a response like:
+
+json
+Copy code
+{
+    "response": "Dry skin can be caused by many conditions like eczema, dehydration, or psoriasis. Can you provide more details about your symptoms?"
+}
+To view the user history, use a GET request to /history:
+
+bash
+Copy code
+curl "http://127.0.0.1:5000/history?user_id=user123"
+It will return the previous history of that user.

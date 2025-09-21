@@ -1,0 +1,49 @@
+HELUX AI...
+
+import os
+import signal
+import sys
+import psutil
+from datetime import datetime 
+
+def log_event(message):
+    """Logs events to a shutdown log for post-incident review."""
+    with open("shutdown_log.txt", "a") as log_file:
+        log_file.write(f"{datetime.now()} - {message}\n")
+
+def terminate_processes():
+    """Terminate all non-essential processes."""
+    essential_processes = ["systemd", "explorer.exe", "svchost.exe", "init"]
+    for process in psutil.process_iter(attrs=['pid', 'name']):
+        try:
+            process_name = process.info['name']
+            if process_name.lower() not in essential_processes:
+                log_event(f"Terminating process {process_name} (PID: {process.info['pid']})")
+                process.terminate()  # Send a termination signal
+                process.wait(timeout=5)  # Wait for process to exit
+        except (psutil.NoSuchProcess, psutil.AccessDenied) as e:
+            log_event(f"Failed to terminate process {process_name} (PID: {process.info['pid']}): {e}")
+
+def confirm_shutdown():
+    """Get confirmation before shutting down the system."""
+    confirmation = input("Confirm emergency shutdown? (yes/no): ").strip().lower()
+    return confirmation == "yes"
+
+def shutdown_system():
+    """Shut down the system securely."""
+    log_event("Initiating system shutdown...")
+    if sys.platform == "win32":
+        os.system("shutdown /s /f /t 1")
+    elif sys.platform in ("linux", "darwin"):
+        os.system("sudo shutdown -h now")
+    else:
+        log_event("Unsupported OS for shutdown command.")
+
+# Run the emergency shutdown process
+if confirm_shutdown():
+    log_event("Emergency shutdown initiated by user.")
+    terminate_processes()
+    shutdown_system()
+else:
+    log_event("Emergency shutdown aborted by user.")
+    print("Shutdown aborted.")

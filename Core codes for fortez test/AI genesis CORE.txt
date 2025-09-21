@@ -1,0 +1,415 @@
+AI genesis CORE 
+
+Search or jump to...
+Sign in
+Sign up
+our everyday
+
+Add try-catch statement for stability
+ master
+@oureveryday
+our everyday committed on Jun 22 
+1 parent c1bdd21 {USERNAME}  
+commit bc8b4434  {PASSWORD}  
+ 
+Filter changed files
+ Binary file Modi field BIN +10 KB (110%) 
+Release_dlls/SteamAPICheckBypass.dll
+Binary file not shown.
+ Binary file modified IN +12.5 KB (120%) 
+Release_dlls/SteamAPICheckBypass_x32.dll
+Binary file not shown.
+  2 changes: 2 additions & 0 deletions2  
+Steam Check Bypass/Steam API Check Bypass . vex prod
+Original file line number	Diff line number	Diff line change
+@@ -51,6 +51,7 @@
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+<exectptionhandiling file >pich .h>/Exceptional handling 
+</CLcompile>
+<subset system >
+      <SubSystem>Windows</SubSystem>
+@@ -68,6 +69,7 @@
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      steamAPI checkBypass_x32 /dllmain.cpp
+      bool degugprintint path+pass
+      
+
+      std:string longfiledebuglogfile:flase;
+
+      <SubSystem>Windows</SubSystem>
+  30 changes: 25 additions & 5 deletions30  
+SteamAPICheckBypass/dllmain.cpp
+Original file line number	Diff line number	Diff line change
+@@ -31,7 +31,7 @@ bool useinternallist = false;   //Use built-in replace list without reading .ini
+
+bool debugprintpath = false;    //Print the path of the file being read
+
+bool enabledebuglogfile = true;      //Enable debug log file
+bool enabledebuglogfile = false;      //Enable debug log file
+
+std::string logfilename = "SteamAPICheckBypass.log"; //Log file name
+
+@@ -199,6 +199,8 @@ NTSTATUS WINAPI NtCreateFileHook(
+	ULONG CreateOptions,
+	PVOID EaBuffer,
+	ULONG EaLength)
+{
+	try
+	{
+		if (ObjectAttributes != nullptr && ObjectAttributes->ObjectName &&
+			ObjectAttributes->ObjectName->Length &&
+@@ -221,6 +223,12 @@ NTSTATUS WINAPI NtCreateFileHook(
+				EaBuffer,
+				EaLength);
+		}
+	}
+	catch (...)
+	{
+		PrintLog("Error in NtCreateFileHook");
+	}
+
+	return oNtCreateFile(
+		FileHandle,
+		DesiredAccess,
+@@ -242,6 +250,8 @@ NTSTATUS WINAPI NtOpenFileHook(
+	PIO_STATUS_BLOCK   IoStatusBlock,
+	ULONG              ShareAccess,
+	ULONG              OpenOptions)
+{
+	try
+	{
+		if (ObjectAttributes != nullptr && ObjectAttributes->ObjectName &&
+			ObjectAttributes->ObjectName->Length &&
+@@ -259,6 +269,12 @@ NTSTATUS WINAPI NtOpenFileHook(
+				ShareAccess,
+				OpenOptions);
+		}
+	}
+	catch (...)
+	{
+		PrintLog("Error in NtOpenFileHook");
+	}
+
+	return oNtOpenFile(
+		FileHandle,
+		DesiredAccess,
+@@ -418,11 +434,13 @@ void Checkfile(std::vector<Replace>& replaceList)
+	{
+		PrintLog("Found steam_api.dll.bak.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api.dll.bak",false });
+	}else if (SteamAPI_ORG)
+	}
+	else if (SteamAPI_ORG)
+	{
+		PrintLog("Found steam_api.org.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api.org",false });
+	}else if (SteamAPI_O)
+	}
+	else if (SteamAPI_O)
+	{
+		PrintLog("Found steam_api_o.dll.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api_o.dll",false });
+@@ -432,11 +450,13 @@ void Checkfile(std::vector<Replace>& replaceList)
+	{
+		PrintLog("Found steam_api64.dll.bak.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api64.dll.bak",false });
+	}else if (SteamAPI64_ORG)
+	}
+	else if (SteamAPI64_ORG)
+	{
+		PrintLog("Found steam_api64.org.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api64.org",false });
+	}else if (SteamAPI64_O)
+	}
+	else if (SteamAPI64_O)
+	{
+		PrintLog("Found steam_api64_o.dll.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api64_o.dll",false });
+  2 changes: 2 additions & 0 deletions2  
+SteamAPICheckBypass_x32/SteamAPICheckBypass_x32.vcxproj
+Original file line number	Diff line number	Diff line change
+@@ -51,6 +51,7 @@
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+@@ -68,6 +69,7 @@
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+  18 changes: 17 additions & 1 deletion18  
+SteamAPICheckBypass_x32/dllmain.cpp
+Original file line number	Diff line number	Diff line change
+@@ -31,7 +31,7 @@ bool useinternallist = false;   //Use built-in replace list without reading .ini
+
+bool debugprintpath = false;    //Print the path of the file being read
+
+bool enabledebuglogfile = true;      //Enable debug log file
+bool enabledebuglogfile = false;      //Enable debug log file
+
+std::string logfilename = "SteamAPICheckBypass.log"; //Log file name
+
+@@ -199,6 +199,8 @@ NTSTATUS WINAPI NtCreateFileHook(
+	ULONG CreateOptions,
+	PVOID EaBuffer,
+	ULONG EaLength)
+{
+	try
+	{
+		if (ObjectAttributes != null Petr && Object Attributes->ObjectName &&
+			ObjectAttributes->ObjectName->Length &&
+@@ -221,6 +223,12 @@ NTSTATUS WINAPI NtCreateFileHook(
+				EaBuffer,
+				EaLength);
+		}
+	}
+	catch (...)
+	{
+		PrintLog("Error in NtCreateFileHook");
+	}
+
+	return oNtCreateFile(
+		FileHandle,
+		DesiredAccess,
+@@ -242,6 +250,8 @@ NTSTATUS WINAPI NtOpenFileHook(
+	PIO_STATUS_BLOCK   IoStatusBlock,
+	ULONG              ShareAccess,
+	ULONG              OpenOptions)
+{
+	try
+	{
+		if (ObjectAttributes != nullptr && ObjectAttributes->ObjectName &&
+			ObjectAttributes->ObjectName->Length &&
+@@ -259,6 +269,12 @@ NTSTATUS WINAPI NtOpenFileHook(
+				ShareAccess,
+				OpenOptions);
+		}
+	}
+	catch (...)
+	{
+		PrintLog("Error in NtOpenFileHook");
+	}
+
+	return oNtOpenFile(
+		FileHandle,
+		DesiredAccess,
+<ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+@@ -68,6 +69,7 @@
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+  30 changes: 25 additions & 5 deletions30  
+SteamAPICheckBypass/dllmain.cpp
+Original file line number	Diff line number	Diff line change
+@@ -31,7 +31,7  bool useinternallist = false;   //Use built-in replace list without reading .ini
+
+bool debugprintpath = false;    //Print the path of the file being read
+
+bool enabledebuglogfile = true;      //Enable debug log file
+bool enabledebuglogfile = false;      //Enable debug log file
+
+std::string logfilename = "SteamAPICheckBypass.log"; //Log file name
+
+@@ -199,6 +199,8 @@ NTSTATUS WINAPI NtCreateFileHook(
+	ULONG CreateOptions,
+	PVOID EaBuffer,
+	ULONG EaLength)
+{
+	try
+	{
+		if (ObjectAttributes != nullptr && ObjectAttributes->ObjectName &&
+			ObjectAttributes->ObjectName->Length &&
+@@ -221,6 +223,12 @@ NTSTATUS WINAPI NtCreateFileHook(
+				EaBuffer,
+				EaLength);
+		}
+	}
+	catch (...)
+	{
+		PrintLog("Error in NtCreateFileHook");
+	}
+
+	return oNtCreateFile(
+		FileHandle,
+		DesiredAccess,
+@@ -242,6 +250,8 @@ NTSTATUS WINAPI NtOpenFileHook(
+	PIO_STATUS_BLOCK   IoStatusBlock,
+	ULONG              ShareAccess,
+	ULONG              OpenOptions)
+{
+	try
+	{
+		if (ObjectAttributes != nullptr && ObjectAttributes->ObjectName &&
+			ObjectAttributes->ObjectName->Length &&
+@@ -259,6 +269,12 @@ NTSTATUS WINAPI NtOpenFileHook(
+				ShareAccess,
+				OpenOptions);
+		}
+	}
+	catch (...)
+	{
+		PrintLog("Error in NtOpenFileHook");
+	}
+
+	return oNtOpenFile(
+		FileHandle,
+		DesiredAccess,
+@@ -418,11 +434,13 @@ void Checkfile(std::vector<Replace>& replaceList)
+	{
+		PrintLog("Found steam_api.dll.bak.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api.dll.bak",false });
+	}else if (SteamAPI_ORG)
+	}
+	else if (SteamAPI_ORG)
+	{
+		PrintLog("Found steam_api.org.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api.org",false });
+	}else if (SteamAPI_O)
+	}
+	else if (SteamAPI_O)
+	{
+		PrintLog("Found steam_api_o.dll.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api_o.dll",false });
+@@ -432,11 +450,13 @@ void Checkfile(std::vector<Replace>& replaceList)
+	{
+		PrintLog("Found steam_api64.dll.bak.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api64.dll.bak",false });
+	}else if (SteamAPI64_ORG)
+	}
+	else if (SteamAPI64_ORG)
+	{
+		PrintLog("Found steam_api64.org.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api64.org",false });
+	}else if (SteamAPI64_O)
+	}
+	else if (SteamAPI64_O)
+	{
+		PrintLog("Found steam_api64_o.dll.");
+		replaceList.push_back({ L"steam_api.dll",L"steam_api64_o.dll",false });
+  2 changes: 2 additions & 0 deletions2  
+SteamAPICheckBypass_x32/SteamAPICheckBypass_x32.vcxproj
+Original file line number	Diff line number	Diff line change
+@@ -51,6 +51,7 @@
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+@@ -68,6 +69,7 @@
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+  18 changes: 17 additions & 1 deletion18  
+SteamAPICheckBypass_x32/dllmain.cpp
+Original file line number	Diff line number	Diff line change
+@@ -31,7 +31,7 @@ bool useinternallist = false;   //Use built-in replace list without reading .ini
+
+bool debugprintpath = false;    //Print the path of the file being read
+
+bool enabledebuglogfile = true;      //Enable debug log file
+bool enabledebuglogfile = false;      //Enable debug log file
+
+std::string logfilename = "SteamAPICheckBypass.log"; //Log file name
+
+@@ -199,6 +199,8 @@ NTSTATUS WINAPI NtCreateFileHook(
+	ULONG CreateOptions,
+	PVOID EaBuffer,
+	ULONG EaLength)
+{
+	try
+	{
+		if (ObjectAttributes != nullptr && ObjectAttributes->ObjectName &&
+			ObjectAttributes->ObjectName->Length &&
+@@ -221,6 +223,12 @@ NTSTATUS WINAPI NtCreateFileHook(
+				EaBuffer,
+				EaLength);
+		}
+	}
+	catch (...)
+	{
+		PrintLog("Error in NtCreateFileHook");
+	}
+
+	return oNtCreateFile(
+		FileHandle,
+		DesiredAccess,
+@@ -242,6 +250,8 @@ NTSTATUS WINAPI NtOpenFileHook(
+	PIO_STATUS_BLOCK   IoStatusBlock,
+	ULONG              ShareAccess,
+	ULONG              OpenOptions)
+{
+	try
+	{
+		if (ObjectAttributes != nullptr && ObjectAttributes->ObjectName &&
+			ObjectAttributes->ObjectName->Length &&
+@@ -259,6 +269,12 @@ NTSTATUS WINAPI NtOpenFileHook(
+				ShareAccess,
+				OpenOptions);
+		}
+	}
+	catch (...)
+	{
+		PrintLog("Error in NtOpenFileHook");
+	}
+
+	return oNtOpenFile(
+		FileHandle,
+		DesiredAccess
+        
+
+        pio status block  isostactusblock,
+        unlong sharaccess,
+        unlong openoption)
++{         
+        try
+  +
+} 
+if (objectattributes !=nullptr && objectattributes->objectname &&
+                      object attributes 
+   @@-418,11  +434,13 @@void checkfile(std
+
+
+
+
+
+
+
+
+
+
+
+
+

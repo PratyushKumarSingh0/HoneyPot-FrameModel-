@@ -1,0 +1,100 @@
+Python Code for DDoS Detection and Mitigation
+
+Requirements
+You’ll need
+
+Python 3
+scapy for packet analysis
+Administrative privileges to access network traffic
+To install the necessary packages:
+
+bash
+Copy code
+pip install scapy
+Python Code for DDoS Detection and Mitigation
+
+
+from scapy.all import sniff, IP, TCP
+from collections import defaultdict
+import time
+import os
+
+# Set the request threshold (requests per second)
+REQUEST_THRESHOLD = 100  # Adjust this based on typical traffic
+BLOCK_DURATION = 300     # Time in seconds to block a suspicious IP
+
+# Dictionary to store request counts and block status
+ip_request_count = defaultdict(int)
+blocked_ips = {}
+
+def block_ip(ip):
+    """Block an IP address by adding it to the system firewall rules."""
+    os.system(f"iptables -A INPUT -s {ip} -j DROP")
+    blocked_ips[ip] = time.time()
+    print(f"[INFO] Blocked IP: {ip}")
+
+def unblock_ip(ip):
+    """Unblock an IP address by removing it from the system firewall rules."""
+    os.system(f"iptables -D INPUT -s {ip} -j DROP")
+    blocked_ips.pop(ip, None)
+    print(f"[INFO] Unblocked IP: {ip}")
+
+def detect_ddos(packet):
+    """Analyze incoming packets for potential DDoS behavior."""
+    if packet.haslayer(IP) and packet.haslayer(TCP):
+        ip_src = packet[IP].src
+        tcp_dport = packet[TCP].dport
+        
+        # Monitor only traffic to the target service (e.g., port 80 for HTTP)
+        if tcp_dport == 80:
+            current_time = time.time()
+            ip_request_count[ip_src] += 1
+
+            # If the request rate exceeds the threshold, block the IP
+            if ip_request_count[ip_src] > REQUEST_THRESHOLD:
+                if ip_src not in blocked_ips:
+                    block_ip(ip_src)
+
+            # Reset counters every second
+            if current_time % 1 == 0:
+                ip_request_count[ip_src] = 0
+
+def manage_blocks():
+    """Unblock IPs after the block duration has expired."""
+    current_time = time.time()
+    for ip, block_time in list(blocked_ips.items()):
+        if current_time - block_time > BLOCK_DURATION:
+            unblock_ip(ip)
+
+def start_sniffing():
+    """Start sniffing network traffic."""
+    print("[INFO] Starting packet sniffing...")
+    sniff(filter="tcp", prn=detect_ddos, store=0)
+
+if __name__ == "__main__":
+    # Start the sniffing process in a separate thread
+    try:
+        while True:
+            start_sniffing()
+            manage_blocks()
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("[INFO] Stopping the script and unblocking all IPs...")
+        for ip in list(blocked_ips.keys()):
+            unblock_ip(ip)
+        print("[INFO] Script stopped.")
+
+
+OUTPUT 
+
+[INFO] Starting packet sniffing...
+[INFO] Detected suspicious activity from IP: 192.168.1.10 - request rate exceeded threshold
+[INFO] Blocked IP: 192.168.1.10
+[INFO] Detected suspicious activity from IP: 192.168.1.20 - request rate exceeded threshold
+[INFO] Blocked IP: 192.168.1.20
+[INFO] Unblocked IP: 192.168.1.10 (block duration expired)
+[INFO] Detected suspicious activity from IP: 192.168.1.30 - request rate exceeded threshold
+[INFO] Blocked IP: 192.168.1.30
+[INFO] Unblocked IP: 192.168.1.20 (block duration expired)
+[INFO] Unblocked IP: 192.168.1.30 (block duration expired)
+

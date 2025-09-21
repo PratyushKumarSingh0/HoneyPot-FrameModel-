@@ -1,0 +1,289 @@
+CORE FILES FOR THE website 
+KASE 
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CyberGuard - Cybersecurity Firm</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+  <header id="home">
+    <nav>
+      <div class="logo">
+        <h2>CyberGuard</h2>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="hero">
+      <h1>Protecting Your Digital Future</h1>
+      <p>Your security is our priority. Trust the experts to safeguard your business.</p>
+      <a href="#contact" class="cta-btn">Get in Touch</a>
+    </div>
+  </header>
+
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="service-card">
+      <i class="fas fa-shield-alt"></i>
+      <h3>Network Security</h3>
+      <p>We secure your networks against cyber threats with the latest technology.</p>
+    </div>
+    <div class="service-card">
+      <i class="fas fa-lock"></i>
+      <h3>Data Protection</h3>
+      <p>Keep your sensitive data safe with our advanced encryption solutions.</p>
+    </div>
+    <div class="service-card">
+      <i class="fas fa-users"></i>
+      <h3>Security Audits</h3>
+      <p>Our experts assess your systems and ensure compliance with industry standards.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>CyberGuard is a leading cybersecurity firm dedicated to protecting businesses from cyber threats. We provide a range of services, from network security to digital forensics, all designed to keep your data safe.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Name" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit" class="cta-btn">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <p>© 2024 CyberGuard - All Rights Reserved</p>
+      <div class="social-icons">
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
+
+/* General Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #1f1f1f, #343434);
+  color: #fff;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+a:hover {
+  color: #ff6347; /* Hover color */
+}
+
+/* Navbar Styling */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #222;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+}
+
+nav .logo h2 {
+  color: #ff6347;
+}
+
+nav .nav-links {
+  list-style: none;
+  display: flex;
+}
+
+nav .nav-links li {
+  margin-left: 20px;
+}
+
+nav .nav-links li a {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 150px 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.cta-btn {
+  background-color: #ff6347;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: #ff4500;
+}
+
+/* Section Styling */
+section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+section h2 {
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+.service-card {
+  background-color: #444;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  display: inline-block;
+  width: 250px;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+}
+
+.service-card i {
+  font-size: 3rem;
+  color: #ff6347;
+  margin-bottom: 10px;
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* Contact Form Styling */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
+  background-color: #555;
+  color: #fff;
+}
+
+button {
+  background-color: #ff6347;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff4500;
+}
+
+/* Footer Styling */
+footer {
+  background-color: #222;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.social-icons a {
+  color: #fff;
+  margin: 0 10px;
+  font-size: 20px;
+}
+
+.social-icons a:hover {
+  color: #ff6347;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .service-card {
+    width: 100%;
+  }
+
+  .nav-links {
+    display: block;
+    margin-top: 20px;
+  }
+
+  .nav-links li {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+Smooth Scroll for Navigation
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});

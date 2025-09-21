@@ -1,0 +1,176 @@
+intrgrated file me version 
+
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+import spacy
+import tensorflow as tf
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+import pyttsx3
+import speech_recognition as sr
+import tkinter as tk
+from tkinter import messagebox
+import threading
+import json
+import re
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Initialize necessary components
+nltk.download('vader_lexicon')
+nlp = spacy.load("en_core_web_sm")
+sia = SentimentIntensityAnalyzer()
+tokenizer = Tokenizer(num_words=10000)
+
+# Conversational Model with Context Awareness
+class ContextualModel:
+    def __init__(self):
+        self.model = tf.keras.Sequential([
+            tf.keras.layers.Embedding(input_dim=10000, output_dim=128, input_length=100),
+            tf.keras.layers.LSTM(128, dropout=0.2),
+            tf.keras.layers.Dense(64, activation="relu"),
+            tf.keras.layers.Dense(1, activation="sigmoid")
+        ])
+
+    def predict(self, input_text):
+        input_seq = tokenizer.texts_to_sequences([input_text])
+        input_padded = pad_sequences(input_seq, maxlen=100)
+        return self.model.predict(input_padded)
+
+# Personalized Responses Model
+class PersonalizationModel:
+    def __init__(self):
+        self.model = tf.keras.Sequential([
+            tf.keras.layers.Dense(64, activation="relu", input_shape=(100,)),
+            tf.keras.layers.Dense(32, activation="relu"),
+            tf.keras.layers.Dense(1, activation="sigmoid")
+        ])
+
+    def predict(self, input_text):
+        input_seq = tokenizer.texts_to_sequences([input_text])
+        input_padded = pad_sequences(input_seq, maxlen=100)
+        return self.model.predict(input_padded)
+
+# Voice Input and Text-to-Speech
+class VoiceAssistant:
+    def __init__(self):
+        self.engine = pyttsx3.init()
+
+    def get_voice_input(self):
+        recognizer = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Listening...")
+            audio = recognizer.listen(source)
+            try:
+                text = recognizer.recognize_google(audio)
+                print(f"Recognized: {text}")
+                return text
+            except sr.UnknownValueError:
+                print("Could not understand audio.")
+                return None
+
+    def text_to_speech(self, text):
+        self.engine.say(text)
+        self.engine.runAndWait()
+
+# Sentiment and Entity Analysis
+class NLPProcessor:
+    def __init__(self):
+        pass
+
+    def analyze_sentiment(self, input_text):
+        return sia.polarity_scores(input_text)
+
+    def recognize_entities(self, input_text):
+        doc = nlp(input_text)
+        return [(ent.text, ent.label_) for ent in doc.ents]
+
+# Smart Contract Analysis
+class SmartContractAnalyzer:
+    def analyze_contract(self, contract_code):
+        vulnerabilities = []
+        if "reentrancy" in contract_code.lower():
+            vulnerabilities.append("Reentrancy vulnerability detected")
+        if "unsecured function" in contract_code.lower():
+            vulnerabilities.append("Unsecured function detected")
+        return vulnerabilities
+
+# Intelligent Prediction
+class IntelligentPredictionModule:
+    def __init__(self):
+        self.classifier = RandomForestClassifier()
+
+    def train_model(self, X, y):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        self.classifier.fit(X_train, y_train)
+        predictions = self.classifier.predict(X_test)
+        accuracy = accuracy_score(y_test, predictions)
+        print(f"Prediction accuracy: {accuracy:.2f}")
+        return accuracy
+
+    def make_prediction(self, vulnerabilities):
+        if not vulnerabilities:
+            return "No vulnerabilities found."
+        encoded_vuln = [len(v) for v in vulnerabilities]  # Example encoding
+        prediction = self.classifier.predict([encoded_vuln])
+        return prediction
+
+# Blockchain Integration
+class BlockchainIntegrationModule:
+    def integrate_with_blockchain(self):
+        try:
+            with open("blockchain_data.json") as f:
+                data = json.load(f)
+            print(f"Contract Address: {data['contract_address']}")
+            print(f"Contract Balance: {data['contract_balance']}")
+        except Exception as e:
+            print(f"Error in blockchain integration: {e}")
+
+# User Interface
+class UserInterface:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title("Conversational AI")
+        self.label = tk.Label(self.root, text="Hello! How can I assist you today?")
+        self.label.pack()
+        self.entry = tk.Entry(self.root)
+        self.entry.pack()
+        self.button = tk.Button(self.root, text="Submit", command=self.process_text_input)
+        self.button.pack()
+
+    def process_text_input(self):
+        input_text = self.entry.get()
+        process_input(input_text)
+
+    def run(self):
+        self.root.mainloop()
+
+# Main Process Function
+def process_input(input_text):
+    nlp_processor = NLPProcessor()
+    contextual_model = ContextualModel()
+    personalization_model = PersonalizationModel()
+    voice_assistant = VoiceAssistant()
+
+    sentiment = nlp_processor.analyze_sentiment(input_text)
+    entities = nlp_processor.recognize_entities(input_text)
+    context_response = contextual_model.predict(input_text)
+    personalization_response = personalization_model.predict(input_text)
+
+    response = "I'm here to help!" if sentiment['compound'] > 0.5 else "I apologize if there's any issue."
+
+    # Log and play the response
+    print(f"Response: {response}")
+    voice_assistant.text_to_speech(response)
+
+# Main function
+def main():
+    ui = UserInterface()
+    ui_thread = threading.Thread(target=ui.run)
+    ui_thread.start()
+
+# Run the main function
+if __name__ == "__main__":
+    main()
